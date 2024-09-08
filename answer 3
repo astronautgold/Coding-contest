@@ -1,0 +1,40 @@
+from collections import deque
+
+def findSteppingNumbers(N, M):
+    if N > M:
+        return []
+    
+    result = []
+    queue = deque(range(1, 10))
+    
+    while queue:
+        num = queue.popleft()
+        
+        if N <= num <= M:
+            result.append(num)
+        
+        if num > M:
+            continue
+        
+        last_digit = num % 10
+        
+        if last_digit > 0:
+            next_num = num * 10 + (last_digit - 1)
+            if next_num <= M:
+                queue.append(next_num)
+        
+        if last_digit < 9:
+            next_num = num * 10 + (last_digit + 1)
+            if next_num <= M:
+                queue.append(next_num)
+    
+    return sorted(result)
+
+# Sample Input
+N, M = 100, 500
+
+# Get the list of stepping numbers
+stepping_numbers = findSteppingNumbers(N, M)
+
+# Print the result
+print(" ".join(map(str, stepping_numbers)))
