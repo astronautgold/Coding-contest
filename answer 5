@@ -1,0 +1,25 @@
+def getMaxToys(prices, money):
+    n = len(prices)
+    start = 0
+    current_sum = 0
+    max_length = 0
+    
+    for end in range(n):
+        current_sum += prices[end]
+        
+        # If the current sum exceeds the budget, shrink the window from the start
+        while current_sum > money:
+            current_sum -= prices[start]
+            start += 1
+        
+        # Update the maximum length of the window
+        max_length = max(max_length, end - start + 1)
+    
+    return max_length
+
+# Sample Input
+prices = [1, 4, 5, 3, 2, 1, 6]
+money = 6
+
+# Function call and output
+print(getMaxToys(prices, money))  # Output should be 3
