@@ -1,0 +1,34 @@
+def reduce_ticket_price(tickets, k):
+    n = len(tickets)
+    if k == n:
+        return "0"  # If we have to remove all digits, the result will be "0"
+
+    result = []  # This will store the final digits
+
+    for digit in tickets:
+        # Remove digits from result if they are greater than current digit, and we still have k removals left
+        while k > 0 and result and result[-1] > digit:
+            result.pop()
+            k -= 1
+        result.append(digit)
+
+    # If we still have removals left, remove from the end
+    while k > 0:
+        result.pop()
+        k -= 1
+
+    # Join the result and remove leading zeros
+    final_result = ''.join(result).lstrip('0')
+
+    # If the final result is empty, return '0'
+    return final_result if final_result else '0'
+
+# Test case 1
+tickets = "203"
+k = 2
+print(reduce_ticket_price(tickets, k))  # Output: "0"
+
+# Test case 2
+tickets = "1432219"
+k = 3
+print(reduce_ticket_price(tickets, k))  # Output: "1219"
