@@ -1,0 +1,30 @@
+def find_two_numbers(arr):
+    # Step 1: XOR all elements of the array
+    xor = 0
+    for num in arr:
+        xor ^= num
+
+    # Step 2: Find a bit that is set in the XOR (rightmost set bit)
+    set_bit = xor & -xor
+
+    # Step 3: Separate numbers into two groups and XOR them independently
+    x = 0
+    y = 0
+    for num in arr:
+        if (num & set_bit) != 0:
+            x ^= num
+        else:
+            y ^= num
+
+    # Step 4: Return the two numbers in increasing order
+    return sorted([x, y])
+
+# Test Example 1
+arr1 = [1, 2, 3, 2, 1, 4]
+result1 = find_two_numbers(arr1)
+print("Output:", result1[0], result1[1])
+
+# Test Example 2
+arr2 = [2, 1, 3, 2]
+result2 = find_two_numbers(arr2)
+print("Output:", result2[0], result2[1])
