@@ -1,0 +1,41 @@
+import java.util.Arrays;
+
+public class FindTwoDistinctNumbers {
+    public static int[] findTwoNumbers(int[] arr) {
+        // Step 1: XOR all elements of the array
+        int xor = 0;
+        for (int num : arr) {
+            xor ^= num;
+        }
+
+        // Step 2: Find a bit that is set in the XOR (rightmost set bit)
+        int setBit = xor & -xor;
+
+        // Step 3: Separate numbers into two groups and XOR them independently
+        int x = 0, y = 0;
+        for (int num : arr) {
+            if ((num & setBit) != 0) {
+                x ^= num;
+            } else {
+                y ^= num;
+            }
+        }
+
+        // Step 4: Sort the result and return in increasing order
+        int[] result = {x, y};
+        Arrays.sort(result);
+        return result;
+    }
+
+    public static void main(String[] args) {
+        // Test example 1
+        int[] arr1 = {1, 2, 3, 2, 1, 4};
+        int[] result1 = findTwoNumbers(arr1);
+        System.out.println("Output: " + result1[0] + " " + result1[1]);
+
+        // Test example 2
+        int[] arr2 = {2, 1, 3, 2};
+        int[] result2 = findTwoNumbers(arr2);
+        System.out.println("Output: " + result2[0] + " " + result2[1]);
+    }
+}
